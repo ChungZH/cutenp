@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/">
-        <file alias="/main.qml">src/QML/main.qml</file>
+        <file alias="/main.qml">src/main.qml</file>
+        <file alias="CodeEditor/CodeEditor.qml">src/CodeEditor/CodeEditor.qml</file>
+        <file alias="CodeEditor/qmldir">src/CodeEditor/qmldir</file>
     </qresource>
 </RCC>
