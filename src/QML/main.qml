@@ -9,17 +9,19 @@ ApplicationWindow {
     height: 450
     font.family: "Microsoft YaHei"
 
-    Flickable {
-        id: flick
-        TextEdit {
+    ScrollView {
+        id: view
+        anchors.fill: parent
+
+        TextArea {
             objectName: "textEditor"
             id: edit
-            width: flick.width
             focus: true
             font.pixelSize: 20
             font.family: "Cascadia Code"
             selectByMouse: true
             text: "#include <iostream>"
+            wrapMode: TextEdit.Wrap
         }
     }
 }

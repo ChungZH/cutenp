@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(qmlNotepanda LANGUAGES CXX)
+project(notepanda LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -28,18 +28,18 @@ find_package(Qt5 COMPONENTS Core Quick QuickControls2 REQUIRED)
 find_package(KF5SyntaxHighlighting REQUIRED)
 
 if(ANDROID)
-    add_library(qmlNotepanda SHARED
-      main.cpp
+    add_library(notepanda SHARED
+      src/main.cpp
       qml.qrc
     )
 else()
-    add_executable(qmlNotepanda
-      main.cpp
+    add_executable(notepanda
+      src/main.cpp
       qml.qrc
     )
 endif()
 
-target_compile_definitions(qmlNotepanda
+target_compile_definitions(notepanda
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
-target_link_libraries(qmlNotepanda
+target_link_libraries(notepanda
   PRIVATE Qt5::Core Qt5::Quick Qt5::QuickControls2 KF5::SyntaxHighlighting)
