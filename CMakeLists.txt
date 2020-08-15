@@ -31,11 +31,15 @@ if(ANDROID)
     add_library(notepanda SHARED
       src/main.cpp
       qml.qrc
+      src/CodeEditor/Backend/codeeditorbackend.cpp
+      src/CodeEditor/Backend/codeeditorbackend.h
     )
 else()
     add_executable(notepanda
       src/main.cpp
       qml.qrc
+      src/CodeEditor/Backend/codeeditorbackend.cpp
+      src/CodeEditor/Backend/codeeditorbackend.h
     )
 endif()
 

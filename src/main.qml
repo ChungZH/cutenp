@@ -10,10 +10,5 @@ ApplicationWindow {
     height: 450
     font.family: "Microsoft YaHei"
 
-    ScrollView {
-        id: view
-        anchors.fill: parent
-
-        CodeEditor {}
-    }
+    CodeEditor {}
 }
