@@ -1,15 +1,15 @@
-#include <definition.h>
-#include <foldingregion.h>
-#include <repository.h>
-#include <syntaxhighlighter.h>
-#include <theme.h>
+#include "./common/nphelpers.h"
+#include "CodeEditor/Backend/codeeditorbackend.h"
 
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQuickStyle>
 #include <QQuickTextDocument>
-
-#include "CodeEditor/Backend/codeeditorbackend.h"
+#include <definition.h>
+#include <foldingregion.h>
+#include <repository.h>
+#include <syntaxhighlighter.h>
+#include <theme.h>
 
 int main(int argc, char *argv[])
 {
@@ -46,16 +46,11 @@ int main(int argc, char *argv[])
             if (object != 0)
             {
                 doc = dynamic_cast<QQuickTextDocument *>(object);
+                Npanda::common::doc = doc;
                 break;
             }
         }
     }
-
-    KSyntaxHighlighting::Repository repository;
-    auto highlighter = new KSyntaxHighlighting::SyntaxHighlighter(doc->textDocument());
-    highlighter->setTheme(repository.defaultTheme(KSyntaxHighlighting::Repository::LightTheme));
-    const auto def = repository.definitionForFileName("main.cpp");
-    highlighter->setDefinition(def);
 
     return app.exec();
 }

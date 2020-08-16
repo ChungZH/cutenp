@@ -33,6 +33,8 @@ if(ANDROID)
       qml.qrc
       src/CodeEditor/Backend/codeeditorbackend.cpp
       src/CodeEditor/Backend/codeeditorbackend.h
+      src/common/nphelpers.cpp
+      src/common/nphelpers.h
     )
 else()
     add_executable(notepanda
@@ -40,6 +42,8 @@ else()
       qml.qrc
       src/CodeEditor/Backend/codeeditorbackend.cpp
       src/CodeEditor/Backend/codeeditorbackend.h
+      src/common/nphelpers.cpp
+      src/common/nphelpers.h
     )
 endif()
 
