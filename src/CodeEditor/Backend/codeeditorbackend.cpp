@@ -64,13 +64,16 @@ void CodeEditorBackend::setText(const QString &text)
 
 bool CodeEditorBackend::load()
 {
-    QFile file(m_fileUrl.path());
+    // DO NOT USE `QUrl.path()` !!!!!!
+    QFile file(m_fileUrl.toLocalFile());
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         return false;
     }
 
-    setText(file.readAll());
+    QTextStream in(&file);
+
+    setText(in.readAll());
 
     file.close();
     return true;

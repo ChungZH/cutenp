@@ -34,7 +34,6 @@ ApplicationWindow {
         folder: shortcuts.documents
         onAccepted: {
             m_codeEditor.openFile(openDialog.fileUrl)
-            console.log(fileUrl)
         }
     }
 }

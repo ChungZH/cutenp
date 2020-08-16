@@ -1,6 +1,9 @@
 #include "nphelpers.h"
 
-namespace Npanda::common
+namespace Npanda
 {
-    QQuickTextDocument *doc;
-} // namespace Npanda::common
+    namespace common
+    {
+        QQuickTextDocument *doc;
+    } // namespace common
+} // namespace Npanda

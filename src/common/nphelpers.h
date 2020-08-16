@@ -3,11 +3,14 @@
 
 #include <QQuickTextDocument>
 
-namespace Npanda::common
+namespace Npanda
 {
-    extern QQuickTextDocument *doc;
+    namespace common
+    {
+        extern QQuickTextDocument *doc;
+    } // namespace common
 
-} // namespace Npanda::common
+} // namespace Npanda
 
 using namespace Npanda::common;
 
