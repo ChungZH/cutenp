@@ -4,7 +4,6 @@
 #include <QObject>
 #include <QQuickItem>
 #include <QQuickTextDocument>
-
 #include <definition.h>
 #include <foldingregion.h>
 #include <repository.h>
@@ -24,6 +23,7 @@ class CodeEditorBackend : public QObject
     QString fileName() const;
     QString text() const;
     Q_INVOKABLE bool load();
+    Q_INVOKABLE bool save();
 
   signals:
     void fileUrlChanged(const QUrl &fileUrl);

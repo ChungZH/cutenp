@@ -11,14 +11,27 @@ ApplicationWindow {
     width: 500
     height: 450
     font.family: "Microsoft YaHei"
+    title: m_codeEditor.title
 
     menuBar: MenuBar {
         Menu {
             title: qsTr("&File")
             MenuItem {
+                text: qsTr("&New...")
+                onTriggered: m_codeEditor.clear()
+            }
+
+            MenuItem {
                 text: qsTr("&Open...")
                 onTriggered: {
                     openDialog.open()
+                }
+            }
+
+            MenuItem {
+                text: qsTr("&Save...")
+                onTriggered: {
+                    m_codeEditor.save()
                 }
             }
         }

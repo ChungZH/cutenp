@@ -2,10 +2,13 @@
 
 #include "../../common/nphelpers.h"
 
+#include <QFile>
+#include <QSaveFile>
 #include <QUrl>
 
 CodeEditorBackend::CodeEditorBackend(QObject *parent) : QObject(parent)
 {
+    setFileName("Untitled");
 }
 
 QUrl CodeEditorBackend::fileUrl() const
@@ -76,5 +79,21 @@ bool CodeEditorBackend::load()
     setText(in.readAll());
 
     file.close();
+    return true;
+}
+
+bool CodeEditorBackend::save()
+{
+    QSaveFile file(m_fileUrl.toLocalFile());
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        return false;
+    }
+
+    QTextStream out(&file);
+    out << m_text;
+
+    if (!file.commit())
+        return false;
     return true;
 }
