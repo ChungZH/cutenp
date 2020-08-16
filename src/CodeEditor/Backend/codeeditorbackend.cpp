@@ -8,7 +8,7 @@
 
 CodeEditorBackend::CodeEditorBackend(QObject *parent) : QObject(parent)
 {
-    setFileName("Untitled");
+    m_fileName = "Untitled";
 }
 
 QUrl CodeEditorBackend::fileUrl() const
@@ -44,8 +44,12 @@ void CodeEditorBackend::setFileName(const QString &fileName)
     if (m_fileName.isEmpty())
     {
         // Init syntax highlighting
+
+        // MAGIC! DON'T TOUCH
         m_doc = Npanda::common::doc;
         m_highlighter = new KSyntaxHighlighting::SyntaxHighlighter(m_doc->textDocument());
+        // MAGIC! DON'T TOUCH
+
         m_highlighter->setTheme(m_repository.defaultTheme(KSyntaxHighlighting::Repository::LightTheme));
     }
     const auto def = m_repository.definitionForFileName(fileName);

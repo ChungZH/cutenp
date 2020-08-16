@@ -72,6 +72,7 @@ Item {
 
     FileDialog {
         id: saveDialog
+        //fileMode: FileDialog.SaveFile
         title: "Please choose a location to save"
         onAccepted: {
             backend.fileUrl = saveDialog.fileUrl
