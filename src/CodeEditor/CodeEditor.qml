@@ -25,12 +25,16 @@ Item {
 
     function save() {
         backend.text = textArea.text
-        if (backend.fileName == "Untitled") {
-            saveDialog.open()
-        }
-        if (backend.save()) {
-            changedSinceLastSave = false
-        }
+        backend.save()
+        backend.load()
+        changedSinceLastSave = false
+    }
+
+    function saveAs() {
+        backend.text = textArea.text
+        backend.saveAs()
+        backend.load()
+        changedSinceLastSave = false
     }
 
     function clear() {
@@ -38,6 +42,10 @@ Item {
         backend.fileUrl = ""
         backend.fileName = "Untitled"
         changedSinceLastSave = false
+    }
+
+    function setReadOnly(bl) {
+        textArea.readOnly = bl
     }
 
     width: parent.width
@@ -58,7 +66,6 @@ Item {
                 "JetBrainsMono Nerd Font"
             }
             selectByMouse: true
-            text: "#include <iostream>"
             wrapMode: TextEdit.Wrap
             onTextChanged: {
                 changedSinceLastSave = true
@@ -68,14 +75,5 @@ Item {
 
     CodeEditorBackend {
         id: backend
-    }
-
-    FileDialog {
-        id: saveDialog
-        //fileMode: FileDialog.SaveFile
-        title: "Please choose a location to save"
-        onAccepted: {
-            backend.fileUrl = saveDialog.fileUrl
-        }
     }
 }

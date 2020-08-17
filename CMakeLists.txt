@@ -24,30 +24,34 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #    endif()
 #endif()
 
-find_package(Qt5 COMPONENTS Core Quick QuickControls2 REQUIRED)
+find_package(Qt5 COMPONENTS Widgets Core Quick QuickControls2 REQUIRED)
 find_package(KF5SyntaxHighlighting REQUIRED)
 
 if(ANDROID)
     add_library(notepanda SHARED
       src/main.cpp
       qml.qrc
+      resources.qrc
       src/CodeEditor/Backend/codeeditorbackend.cpp
       src/CodeEditor/Backend/codeeditorbackend.h
       src/common/nphelpers.cpp
       src/common/nphelpers.h
+      src/aboutwindowBackend.hpp
     )
 else()
     add_executable(notepanda
       src/main.cpp
       qml.qrc
+      resources.qrc
       src/CodeEditor/Backend/codeeditorbackend.cpp
       src/CodeEditor/Backend/codeeditorbackend.h
       src/common/nphelpers.cpp
       src/common/nphelpers.h
+      src/aboutwindowBackend.hpp
     )
 endif()
 
 target_compile_definitions(notepanda
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 target_link_libraries(notepanda
-  PRIVATE Qt5::Core Qt5::Quick Qt5::QuickControls2 KF5::SyntaxHighlighting)
+  PRIVATE Qt5::Core Qt5::Widgets Qt5::Quick Qt5::QuickControls2 KF5::SyntaxHighlighting)

@@ -1,7 +1,8 @@
 #include "./common/nphelpers.h"
 #include "CodeEditor/Backend/codeeditorbackend.h"
+#include "aboutwindowBackend.hpp"
 
-#include <QGuiApplication>
+#include <QApplication>
 #include <QQmlApplicationEngine>
 #include <QQuickStyle>
 #include <QQuickTextDocument>
@@ -15,13 +16,18 @@ int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
-    QGuiApplication app(argc, argv);
+    QApplication app(argc, argv);
+
+    app.setOrganizationName("ChungZH");
+    app.setApplicationName("Notepanda");
+    app.setApplicationVersion("0.1.6");
 
     QQmlApplicationEngine engine;
 
-    QQuickStyle::setStyle("Material");
+    QQuickStyle::setStyle("Universal");
 
     qmlRegisterType<CodeEditorBackend>("CodeEditorBackend", 1, 0, "CodeEditorBackend");
+    qmlRegisterType<AboutwindowBackend>("AboutwindowBackend", 1, 0, "AboutwindowBackend");
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(

@@ -3,6 +3,7 @@
 #include "../../common/nphelpers.h"
 
 #include <QFile>
+#include <QFileDialog>
 #include <QSaveFile>
 #include <QUrl>
 
@@ -32,6 +33,7 @@ void CodeEditorBackend::setFileUrl(const QUrl &fileUrl)
         return;
 
     m_fileUrl = fileUrl;
+
     emit fileUrlChanged(fileUrl);
     setFileName(fileUrl.fileName());
 }
@@ -41,7 +43,7 @@ void CodeEditorBackend::setFileName(const QString &fileName)
     if (m_fileName == fileName)
         return;
 
-    if (m_fileName.isEmpty())
+    if (m_fileName.isEmpty() || m_fileName == "Untitled")
     {
         // Init syntax highlighting
 
@@ -52,8 +54,11 @@ void CodeEditorBackend::setFileName(const QString &fileName)
 
         m_highlighter->setTheme(m_repository.defaultTheme(KSyntaxHighlighting::Repository::LightTheme));
     }
+
     const auto def = m_repository.definitionForFileName(fileName);
+
     m_highlighter->setDefinition(def);
+
     m_fileName = fileName;
 
     emit fileNameChanged(fileName);
@@ -88,6 +93,11 @@ bool CodeEditorBackend::load()
 
 bool CodeEditorBackend::save()
 {
+    if (m_fileUrl.isEmpty())
+    {
+        setFileUrl(QFileDialog::getSaveFileUrl());
+    }
+
     QSaveFile file(m_fileUrl.toLocalFile());
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
@@ -99,5 +109,25 @@ bool CodeEditorBackend::save()
 
     if (!file.commit())
         return false;
+
+    return true;
+}
+
+bool CodeEditorBackend::saveAs()
+{
+    setFileUrl(QFileDialog::getSaveFileUrl());
+
+    QSaveFile file(m_fileUrl.toLocalFile());
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        return false;
+    }
+
+    QTextStream out(&file);
+    out << m_text;
+
+    if (!file.commit())
+        return false;
+
     return true;
 }

@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>assets/notepanda.png</file>
+        <file>assets/CREDIT.md</file>
+        <file>assets/banner.png</file>
+        <file>assets/horizontal-logo-text.png</file>
+    </qresource>
+</RCC>

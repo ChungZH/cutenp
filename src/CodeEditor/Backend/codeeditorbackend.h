@@ -24,6 +24,7 @@ class CodeEditorBackend : public QObject
     QString text() const;
     Q_INVOKABLE bool load();
     Q_INVOKABLE bool save();
+    Q_INVOKABLE bool saveAs();
 
   signals:
     void fileUrlChanged(const QUrl &fileUrl);
