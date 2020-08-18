@@ -1,5 +1,6 @@
 #include "./common/nphelpers.h"
 #include "CodeEditor/Backend/codeeditorbackend.h"
+#include "CodeEditor/Backend/linenumbers.hpp"
 #include "aboutwindowBackend.hpp"
 
 #include <QApplication>
@@ -27,6 +28,7 @@ int main(int argc, char *argv[])
     QQuickStyle::setStyle("Universal");
 
     qmlRegisterType<CodeEditorBackend>("CodeEditorBackend", 1, 0, "CodeEditorBackend");
+    qmlRegisterType<CodeEditorBackend>("LineNumbers", 1, 0, "LineNumbers");
     qmlRegisterType<AboutwindowBackend>("AboutwindowBackend", 1, 0, "AboutwindowBackend");
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
