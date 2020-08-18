@@ -37,6 +37,7 @@ if(ANDROID)
       src/common/nphelpers.cpp
       src/common/nphelpers.h
       src/aboutwindowBackend.hpp
+      src/CodeEditor/Backend/linenumbers.hpp
     )
 else()
     add_executable(notepanda
@@ -48,6 +49,7 @@ else()
       src/common/nphelpers.cpp
       src/common/nphelpers.h
       src/aboutwindowBackend.hpp
+      src/CodeEditor/Backend/linenumbers.hpp
     )
 endif()
 

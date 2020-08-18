@@ -2,6 +2,7 @@
 
 #include "../../common/nphelpers.h"
 
+#include <QDebug>
 #include <QFile>
 #include <QFileDialog>
 #include <QSaveFile>

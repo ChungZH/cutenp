@@ -37,6 +37,8 @@ class CodeEditorBackend : public QObject
     void setText(const QString &text);
 
   private:
+    friend class LineNumbers;
+
     QUrl m_fileUrl;
     QString m_fileName;
     QString m_text;
