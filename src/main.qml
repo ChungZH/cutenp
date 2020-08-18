@@ -40,13 +40,13 @@ ApplicationWindow {
         Menu {
             title: qsTr("&File")
             Action {
-                text: qsTr("&New...")
+                text: qsTr("&New")
                 onTriggered: m_codeEditor.clear()
                 shortcut: StandardKey.New
             }
 
             Action {
-                text: qsTr("&Open...")
+                text: qsTr("&Open")
                 onTriggered: {
                     openDialog.open()
                 }
@@ -54,7 +54,7 @@ ApplicationWindow {
             }
 
             Action {
-                text: qsTr("&Save...")
+                text: qsTr("&Save")
                 onTriggered: {
                     m_codeEditor.save()
                 }
@@ -62,7 +62,7 @@ ApplicationWindow {
             }
 
             Action {
-                text: qsTr("Save &As...")
+                text: qsTr("Save &As")
                 onTriggered: {
                     m_codeEditor.saveAs()
                 }
@@ -72,7 +72,7 @@ ApplicationWindow {
             MenuSeparator {}
 
             Action {
-                text: qsTr("&Quit...")
+                text: qsTr("&Quit")
                 onTriggered: {
                     Qt.quit()
                 }
@@ -113,7 +113,7 @@ ApplicationWindow {
             title: qsTr("&Help")
 
             Action {
-                text: "About"
+                text: "&About"
                 onTriggered: m_aboutWindow.show()
             }
         }

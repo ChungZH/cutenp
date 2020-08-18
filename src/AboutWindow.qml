@@ -9,47 +9,99 @@ Window {
     title: qsTr("About Notepanda")
 
     minimumWidth: 450
-    minimumHeight: 200
+    minimumHeight: 500
 
-    Flow {
-        id: aboutFlow
-        flow: Flow.TopToBottom
+    Column {
+        id: column
         anchors.margins: 8
-        spacing: 10
+        spacing: 15
         anchors.fill: parent
+
+        width: 413.6
 
         Image {
             id: image
-            x: 98
             y: 23
             width: 413.6
             height: 153.6
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+            fillMode: Image.Stretch
             source: "qrc:/assets/horizontal-logo-text.png"
         }
 
-        Text {
-            text: qsTr("Version: ") + Qt.application.version
-            font.pointSize: 10
-            font.family: {
-                if (Qt.platform.os == "windows")
-                    "Microsoft YaHei"
+        Grid {
+            columns: 2
+            spacing: 16
+            Text {
+                text: qsTr("Version")
+                font.pointSize: 10
+                font.family: {
+                    if (Qt.platform.os == "windows")
+                        "Microsoft YaHei"
+                }
+            }
+            Text {
+                text: Qt.application.version
+                font.pointSize: 10
+                font.family: {
+                    if (Qt.platform.os == "windows")
+                        "Microsoft YaHei"
+                }
+            }
+            Text {
+                text: "GitHub"
+                font.pointSize: 10
+                font.family: {
+                    if (Qt.platform.os == "windows")
+                        "Microsoft YaHei"
+                }
+            }
+            Text {
+                text: "[ChungZH/notepanda](https://github.com/ChungZH/notepanda)"
+                textFormat: Text.MarkdownText
+                onLinkActivated: Qt.openUrlExternally(link)
+                font.pointSize: 10
+                font.family: {
+                    if (Qt.platform.os == "windows")
+                        "Microsoft YaHei"
+                }
+            }
+            Text {
+                text: "License"
+                font.pointSize: 10
+                font.family: {
+                    if (Qt.platform.os == "windows")
+                        "Microsoft YaHei"
+                }
+            }
+            Text {
+                text: "MIT"
+                font.pointSize: 10
+                font.family: {
+                    if (Qt.platform.os == "windows")
+                        "Microsoft YaHei"
+                }
             }
         }
 
         TextArea {
             id: creditArea
+            width: 413.6
+            wrapMode: TextArea.Wrap
             text: backend.creditText
+            textFormat: TextArea.MarkdownText
         }
     }
 
-    //AboutwindowBackend {
-    //id: backend
-    //}
+    AboutwindowBackend {
+        id: backend
+    }
 }
 
 /*##^##
 Designer {
-    D{i:0;autoSize:true;formeditorZoom:0.8999999761581421;height:480;width:640}
+    D{i:0;autoSize:true;formeditorZoom:0.8999999761581421;height:480;width:640}D{i:2;anchors_x:98}
 }
 ##^##*/
 

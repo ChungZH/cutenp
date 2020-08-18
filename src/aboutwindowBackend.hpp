@@ -29,9 +29,10 @@ class AboutwindowBackend : public QObject
     void setCreditText(const QString &creditTextSource)
     {
         QFile file(creditTextSource);
+        if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+            return;
         m_creditText = file.readAll();
         emit creditTextChanged();
-        qDebug() << m_creditText;
         file.close();
     }
 
