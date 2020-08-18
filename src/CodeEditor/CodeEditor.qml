@@ -58,8 +58,8 @@ Item {
 
         LineNumbers {
             id: lineNumbers
-            //height: parent.height
-            //width: 40
+            height: parent.height
+            width: 40
         }
 
         TextArea {
@@ -74,7 +74,7 @@ Item {
                 var lineHeight = 16
                 //(contentHeight-8) / lineCount
                 lineNumbers.lineCount = lineCount
-                lineNumbers.scrollY = flickableItem.contentY
+                //lineNumbers.scrollY = flickableItem.contentY
                 lineNumbers.lineHeight = lineHeight
                 lineNumbers.cursorPosition = cursorPosition
                 lineNumbers.selectionStart = selectionStart
