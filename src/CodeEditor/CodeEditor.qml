@@ -3,6 +3,7 @@ import QtQuick.Controls 2.5
 import QtQuick.Dialogs 1.2
 import CodeEditorBackend 1.0
 import LineNumbers 1.0
+import ConfigManager 1.0
 
 Item {
     property alias textArea: textArea
@@ -59,7 +60,7 @@ Item {
         LineNumbers {
             id: lineNumbers
             height: parent.height
-            width: 40
+            width: fontMetrics.advanceWidth(textArea.lineCount.toString()) * 2
         }
 
         TextArea {
@@ -71,8 +72,8 @@ Item {
             anchors.left: lineNumbers.right
 
             function update() {
-                var lineHeight = 16
-                //(contentHeight-8) / lineCount
+                // var lineHeight = (contentHeight - 8) / lineCount
+                var lineHeight = fontMetrics.height
                 lineNumbers.lineCount = lineCount
                 //lineNumbers.scrollY = flickableItem.contentY
                 lineNumbers.lineHeight = lineHeight
@@ -88,13 +89,9 @@ Item {
             onCursorPositionChanged: update()
 
             focus: true
-            font.pixelSize: 20
-            font.family: {
-                "Cascadia Code"
-                "JetBrainsMono Nerd Font"
-            }
+            font.pointSize: configManager.editorFontSize
+            font.family: configManager.editorFontFamily
             selectByMouse: true
-            wrapMode: TextEdit.Wrap
             onTextChanged: {
                 changedSinceLastSave = true
             }
@@ -103,5 +100,14 @@ Item {
 
     CodeEditorBackend {
         id: backend
+    }
+
+    ConfigManager {
+        id: configManager
+    }
+
+    FontMetrics {
+        id: fontMetrics
+        font: textArea.font
     }
 }

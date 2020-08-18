@@ -1,10 +1,15 @@
 #ifndef LINENUMBERS_HPP
 #define LINENUMBERS_HPP
 
+#include "../../common/nphelpers.h"
+#include "../../settings/configmanager.h"
+#include "codeeditorbackend.h"
+
 #include <QPainter>
 #include <QQuickPaintedItem>
 #include <algorithm>
 #include <cmath>
+#include <theme.h>
 
 class LineNumbers : public QQuickPaintedItem
 {
@@ -39,6 +44,11 @@ class LineNumbers : public QQuickPaintedItem
 
     virtual void paint(QPainter *painter) override
     {
+        ConfigManager *cfManager = new ConfigManager;
+
+        QFont font(cfManager->editorFontFamily(), cfManager->editorFontSize());
+        painter->setFont(QFont(cfManager->editorFontFamily(), cfManager->editorFontSize() * 0.95));
+
         // Find current line
         QString untilSelectedText = m_text.mid(0, selectionStart());
         int selectedTextStartLine = untilSelectedText.count(QRegExp("[\r\n]")) + 1;
@@ -58,32 +68,21 @@ class LineNumbers : public QQuickPaintedItem
         for (int i = 0; i < numLines; i++)
         {
             int lineNumber = i + firstLineVisible + 1;
-            QFont font("times", 24);
             QFontMetrics fm(font);
             QString text = QString("%1").arg(lineNumber);
             int textWidth = fm.horizontalAdvance(text);
             int textHeight = m_lineHeight;
             float x = width() - textWidth * 0.5 - 5;
             float y = 5 + i * m_lineHeight - rest;
+
             QRectF textRect(x, y, textWidth, textHeight);
+            // Current & Selected
+            if (lineNumber >= selectedTextStartLine && lineNumber < selectedTextStartLine + numLinesSelected || lineNumber == cursorLine)
+                painter->setPen(Npanda::common::shTheme.editorColor(KSyntaxHighlighting::Theme::CurrentLineNumber));
+            else
+                painter->setPen(Npanda::common::shTheme.editorColor(KSyntaxHighlighting::Theme::LineNumbers));
 
-            if (lineNumber >= selectedTextStartLine && lineNumber < selectedTextStartLine + numLinesSelected)
-            {
-                QRectF selectedTextRect(0, y, width(), textHeight);
-                painter->setPen(QColor("#b2d7ff"));
-                painter->drawRect(selectedTextRect);
-                painter->fillRect(selectedTextRect, QColor("#b2d7ff"));
-            }
-            if (lineNumber == cursorLine)
-            {
-                QRectF selectedTextRect(0, y, width(), textHeight);
-                painter->setPen(Qt::lightGray);
-                painter->drawRect(selectedTextRect);
-                painter->fillRect(selectedTextRect, Qt::lightGray);
-            }
-
-            painter->setPen(Qt::black);
-            painter->drawText(textRect, text);
+            painter->drawText(textRect, Qt::AlignRight, text);
         }
     }
 

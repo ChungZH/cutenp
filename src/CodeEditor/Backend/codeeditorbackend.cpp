@@ -54,6 +54,7 @@ void CodeEditorBackend::setFileName(const QString &fileName)
         // MAGIC! DON'T TOUCH
 
         m_highlighter->setTheme(m_repository.defaultTheme(KSyntaxHighlighting::Repository::LightTheme));
+        Npanda::common::shTheme = m_highlighter->theme();
     }
 
     const auto def = m_repository.definitionForFileName(fileName);

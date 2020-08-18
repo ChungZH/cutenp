@@ -11,6 +11,7 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+
 # QtCreator supports the following variables for Android, which are identical to qmake Android variables.
 # Check http://doc.qt.io/qt-5/deployment-android.html for more information.
 # They need to be set before the find_package(Qt5 ...) call.
@@ -27,29 +28,27 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(Qt5 COMPONENTS Widgets Core Quick QuickControls2 REQUIRED)
 find_package(KF5SyntaxHighlighting REQUIRED)
 
+set(SOURCES
+    src/main.cpp
+    qml.qrc
+    resources.qrc
+    src/CodeEditor/Backend/codeeditorbackend.cpp
+    src/CodeEditor/Backend/codeeditorbackend.h
+    src/common/nphelpers.cpp
+    src/common/nphelpers.h
+    src/aboutwindowBackend.hpp
+    src/CodeEditor/Backend/linenumbers.hpp
+    src/settings/configmanager.h
+    src/settings/configmanager.cpp
+)
+
 if(ANDROID)
     add_library(notepanda SHARED
-      src/main.cpp
-      qml.qrc
-      resources.qrc
-      src/CodeEditor/Backend/codeeditorbackend.cpp
-      src/CodeEditor/Backend/codeeditorbackend.h
-      src/common/nphelpers.cpp
-      src/common/nphelpers.h
-      src/aboutwindowBackend.hpp
-      src/CodeEditor/Backend/linenumbers.hpp
+      ${SOURCES}
     )
 else()
     add_executable(notepanda
-      src/main.cpp
-      qml.qrc
-      resources.qrc
-      src/CodeEditor/Backend/codeeditorbackend.cpp
-      src/CodeEditor/Backend/codeeditorbackend.h
-      src/common/nphelpers.cpp
-      src/common/nphelpers.h
-      src/aboutwindowBackend.hpp
-      src/CodeEditor/Backend/linenumbers.hpp
+      ${SOURCES}
     )
 endif()
 
