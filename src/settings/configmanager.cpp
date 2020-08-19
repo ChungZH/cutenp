@@ -78,6 +78,7 @@ void ConfigManager::readGeneralSettings()
 {
     if (settings->contains("Editor/FontFamily"))
     {
+
         m_editorFontFamily = settings->value("Editor/FontFamily").toString();
     }
     else

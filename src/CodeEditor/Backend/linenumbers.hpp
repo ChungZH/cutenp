@@ -44,10 +44,8 @@ class LineNumbers : public QQuickPaintedItem
 
     virtual void paint(QPainter *painter) override
     {
-        ConfigManager *cfManager = new ConfigManager;
-
         QFont font(cfManager->editorFontFamily(), cfManager->editorFontSize());
-        painter->setFont(QFont(cfManager->editorFontFamily(), cfManager->editorFontSize() * 0.95));
+        painter->setFont(font);
 
         // Find current line
         QString untilSelectedText = m_text.mid(0, selectionStart());
@@ -64,25 +62,38 @@ class LineNumbers : public QQuickPaintedItem
         int rest = (m_scrollY > 0) ? (m_scrollY % lineHeight) : 0;
         // The last visible line is either the last line in the textfield or if we have scrolled as far as we get with current size
         int lastLineVisible = std::min(firstLineVisible + int(height() / m_lineHeight) + 1, m_lineCount);
-        int numLines = lastLineVisible - firstLineVisible;
-        for (int i = 0; i < numLines; i++)
+        const int numLines = lastLineVisible - firstLineVisible;
+        for (int i = 0; i < int(height() / m_lineHeight) + 1; i++)
         {
             int lineNumber = i + firstLineVisible + 1;
             QFontMetrics fm(font);
             QString text = QString("%1").arg(lineNumber);
             int textWidth = fm.horizontalAdvance(text);
             int textHeight = m_lineHeight;
-            float x = width() - textWidth * 0.5 - 5;
+            float x = width() - textWidth - 5;
             float y = 5 + i * m_lineHeight - rest;
 
-            QRectF textRect(x, y, textWidth, textHeight);
-            // Current & Selected
-            if (lineNumber >= selectedTextStartLine && lineNumber < selectedTextStartLine + numLinesSelected || lineNumber == cursorLine)
-                painter->setPen(Npanda::common::shTheme.editorColor(KSyntaxHighlighting::Theme::CurrentLineNumber));
-            else
-                painter->setPen(Npanda::common::shTheme.editorColor(KSyntaxHighlighting::Theme::LineNumbers));
+            QRectF bgRect(0, y, width(), textHeight);
+            QColor linenumbersBg(Npanda::common::shTheme.editorColor(KSyntaxHighlighting::Theme::IconBorder));
+            if (linenumbersBg != QColor("#000000"))
+            {
+                painter->setPen(linenumbersBg);
+                painter->drawRect(bgRect);
+                painter->fillRect(bgRect, linenumbersBg);
+            }
 
-            painter->drawText(textRect, Qt::AlignRight, text);
+            // paint numbers
+            if (i < numLines)
+            {
+                QRectF textRect(x, y, textWidth, textHeight);
+                // Current & Selected
+                if (lineNumber >= selectedTextStartLine && lineNumber < selectedTextStartLine + numLinesSelected || lineNumber == cursorLine)
+                    painter->setPen(Npanda::common::shTheme.editorColor(KSyntaxHighlighting::Theme::CurrentLineNumber));
+                else
+                    painter->setPen(Npanda::common::shTheme.editorColor(KSyntaxHighlighting::Theme::LineNumbers));
+
+                painter->drawText(textRect, Qt::AlignLeft, text);
+            }
         }
     }
 
@@ -182,6 +193,7 @@ class LineNumbers : public QQuickPaintedItem
     }
 
   private:
+    ConfigManager *cfManager = new ConfigManager;
     int m_lineCount = 0;
     int m_scrollY = 0;
     float m_lineHeight = 0;

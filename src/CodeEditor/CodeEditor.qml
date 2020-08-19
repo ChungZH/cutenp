@@ -59,8 +59,13 @@ Item {
 
         LineNumbers {
             id: lineNumbers
-            height: parent.height
-            width: fontMetrics.advanceWidth(textArea.lineCount.toString()) * 2
+            height: {
+                if (window.height > textArea.contentHeight)
+                    window.height
+                else
+                    textArea.contentHeight
+            }
+            width: fontMetrics.advanceWidth(textArea.lineCount.toString()) + 10
         }
 
         TextArea {
@@ -70,12 +75,13 @@ Item {
             height: parent.height
             width: parent.width - lineNumbers.width
             anchors.left: lineNumbers.right
+            anchors.leftMargin: 5
 
             function update() {
-                // var lineHeight = (contentHeight - 8) / lineCount
-                var lineHeight = fontMetrics.height
+                var lineHeight = contentHeight / lineCount
+                // var lineHeight = fontMetrics.height
                 lineNumbers.lineCount = lineCount
-                //lineNumbers.scrollY = flickableItem.contentY
+                // lineNumbers.scrollY = flickableItem.contentY
                 lineNumbers.lineHeight = lineHeight
                 lineNumbers.cursorPosition = cursorPosition
                 lineNumbers.selectionStart = selectionStart
@@ -92,9 +98,7 @@ Item {
             font.pointSize: configManager.editorFontSize
             font.family: configManager.editorFontFamily
             selectByMouse: true
-            onTextChanged: {
-                changedSinceLastSave = true
-            }
+            onTextChanged: changedSinceLastSave = true
         }
     }
 

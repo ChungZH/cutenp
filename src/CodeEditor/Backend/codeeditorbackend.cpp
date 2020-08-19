@@ -43,7 +43,6 @@ void CodeEditorBackend::setFileName(const QString &fileName)
 {
     if (m_fileName == fileName)
         return;
-
     if (m_fileName.isEmpty() || m_fileName == "Untitled")
     {
         // Init syntax highlighting
