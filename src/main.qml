@@ -5,7 +5,6 @@ import QtQuick.Dialogs 1.3
 
 import "./CodeEditor" 1.0
 
-//import "./AboutWindow.qml"
 ApplicationWindow {
     id: window
     visible: true
@@ -47,35 +46,36 @@ ApplicationWindow {
 
             Action {
                 text: qsTr("&Open")
-                onTriggered: {
-                    openDialog.open()
-                }
+                onTriggered: openDialog.open()
                 shortcut: StandardKey.Open
             }
 
             Action {
                 text: qsTr("&Save")
-                onTriggered: {
-                    m_codeEditor.save()
-                }
+                onTriggered: m_codeEditor.save()
+
                 shortcut: StandardKey.Save
             }
 
             Action {
                 text: qsTr("Save &As")
-                onTriggered: {
-                    m_codeEditor.saveAs()
-                }
+                onTriggered: m_codeEditor.saveAs()
+
                 shortcut: StandardKey.SaveAs
+            }
+            MenuSeparator {}
+
+            Action {
+                text: qsTr("Preferences")
+                onTriggered: m_preferencesWindow.show()
+                shortcut: StandardKey.Preferences
             }
 
             MenuSeparator {}
 
             Action {
                 text: qsTr("&Quit")
-                onTriggered: {
-                    Qt.quit()
-                }
+                onTriggered: Qt.quit()
             }
         }
         Menu {
@@ -98,7 +98,6 @@ ApplicationWindow {
 
             Action {
                 text: {
-
                     if (!m_codeEditor.textArea.readOnly)
                         qsTr("Turn on Read-Only mode")
                     else
@@ -121,6 +120,10 @@ ApplicationWindow {
 
     AboutWindow {
         id: m_aboutWindow
+    }
+
+    PreferencesWindow {
+        id: m_preferencesWindow
     }
 
     CodeEditor {
