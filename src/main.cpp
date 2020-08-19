@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
 
-    QQuickStyle::setStyle("Universal");
+    QQuickStyle::setStyle("Material");
 
     qmlRegisterType<CodeEditorBackend>("CodeEditorBackend", 1, 0, "CodeEditorBackend");
     qmlRegisterType<LineNumbers>("LineNumbers", 1, 0, "LineNumbers");
