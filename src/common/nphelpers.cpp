@@ -6,5 +6,6 @@ namespace Npanda
     {
         QQuickTextDocument *doc;
         KSyntaxHighlighting::Theme shTheme;
+        QStringList shThemeList;
     } // namespace common
 } // namespace Npanda

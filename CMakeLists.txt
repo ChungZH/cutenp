@@ -36,11 +36,13 @@ set(SOURCES
     src/CodeEditor/Backend/codeeditorbackend.h
     src/common/nphelpers.cpp
     src/common/nphelpers.h
-    src/aboutwindowBackend.hpp
+    src/aboutwindowbackend.hpp
     src/CodeEditor/Backend/linenumbers.hpp
     src/settings/configmanager.h
     src/settings/configmanager.cpp
+    src/preferenceswindowbackend.hpp
 )
+
 
 if(ANDROID)
     add_library(notepanda SHARED

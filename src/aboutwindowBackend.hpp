@@ -6,13 +6,13 @@
 #include <QObject>
 #include <QUrl>
 
-class AboutwindowBackend : public QObject
+class AboutWindowBackend : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString creditText READ creditText WRITE setCreditText NOTIFY creditTextChanged)
 
   public:
-    AboutwindowBackend()
+    AboutWindowBackend()
     {
         setCreditText(":/assets/CREDIT.md");
     }

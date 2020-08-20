@@ -23,6 +23,7 @@ Item {
         textArea.text = backend.text
         isUnsavedFile = false
         changedSinceLastSave = false
+        configChanged()
     }
 
     function save() {
@@ -50,33 +51,21 @@ Item {
         textArea.readOnly = bl
     }
 
+    function configChanged() {
+        configManager.readGeneralSettings()
+        lineNumbers.updateConfigs()
+        backend.updateShTheme(configManager.editorColorTheme)
+    }
+
     width: parent.width
     height: parent.height
 
-    Flickable {
+    ScrollView {
         id: view
         anchors.fill: parent
 
         contentWidth: textArea.paintedWidth
         contentHeight: textArea.paintedHeight
-        clip: true
-
-        ScrollBar.vertical: ScrollBar {
-            id: control
-            policy: ScrollBar.AlwaysOn
-            size: 0.3
-            active: true
-            position: 0.2
-            orientation: Qt.Vertical
-            width: 10
-
-            contentItem: Rectangle {
-                implicitWidth: 6
-                implicitHeight: 100
-                radius: width / 2
-                color: control.pressed ? "#81e889" : "#c2f4c6"
-            }
-        }
 
         LineNumbers {
             id: lineNumbers
@@ -89,18 +78,7 @@ Item {
             width: fontMetrics.advanceWidth(textArea.lineCount.toString()) + 10
         }
 
-        function ensureVisible(r) {
-            if (contentX >= r.x)
-                contentX = r.x
-            else if (contentX + width <= r.x + r.width)
-                contentX = r.x + r.width - width
-            if (contentY >= r.y)
-                contentY = r.y
-            else if (contentY + height <= r.y + r.height)
-                contentY = r.y + r.height - height
-        }
-
-        TextEdit {
+        TextArea {
             objectName: "textEditor"
             id: textArea
 
@@ -130,8 +108,9 @@ Item {
             font.pointSize: configManager.editorFontSize
             font.family: configManager.editorFontFamily
             selectByMouse: true
-            onTextChanged: changedSinceLastSave = true
-            onCursorRectangleChanged: view.ensureVisible(cursorRectangle)
+            onTextChanged: {
+                changedSinceLastSave = true
+            }
         }
     }
 

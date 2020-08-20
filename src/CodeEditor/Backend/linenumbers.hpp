@@ -16,7 +16,7 @@ class LineNumbers : public QQuickPaintedItem
     Q_OBJECT
     Q_PROPERTY(int lineCount READ lineCount WRITE setLineCount NOTIFY lineCountChanged)
     Q_PROPERTY(int scrollY READ scrollY WRITE setScrollY NOTIFY scrollYChanged)
-    Q_PROPERTY(float lineHeight READ lineHeight WRITE setLineHeight NOTIFY lineHeightChanged)
+    Q_PROPERTY(double lineHeight READ lineHeight WRITE setLineHeight NOTIFY lineHeightChanged)
     Q_PROPERTY(QString text READ text WRITE setText NOTIFY textChanged)
     Q_PROPERTY(int cursorPosition READ cursorPosition WRITE setCursorPosition NOTIFY cursorPositionChanged)
     Q_PROPERTY(int selectionStart READ selectionStart WRITE setSelectionStart NOTIFY selectionStartChanged)
@@ -25,6 +25,11 @@ class LineNumbers : public QQuickPaintedItem
   public:
     explicit LineNumbers(QQuickPaintedItem *parent = nullptr)
     {
+    }
+
+    Q_INVOKABLE void updateConfigs()
+    {
+        cfManager->readGeneralSettings();
     }
 
     int lineCount() const
@@ -37,7 +42,7 @@ class LineNumbers : public QQuickPaintedItem
         return m_scrollY;
     }
 
-    float lineHeight() const
+    double lineHeight() const
     {
         return m_lineHeight;
     }
@@ -63,17 +68,22 @@ class LineNumbers : public QQuickPaintedItem
         // The last visible line is either the last line in the textfield or if we have scrolled as far as we get with current size
         int lastLineVisible = std::min(firstLineVisible + int(height() / m_lineHeight) + 1, m_lineCount);
         const int numLines = lastLineVisible - firstLineVisible;
-        for (int i = 0; i < int(height() / m_lineHeight) + 1; i++)
+        for (int i = 0; i < int(height() / m_lineHeight) + 2; i++)
         {
             int lineNumber = i + firstLineVisible + 1;
             QFontMetrics fm(font);
             QString text = QString("%1").arg(lineNumber);
             int textWidth = fm.horizontalAdvance(text);
             int textHeight = m_lineHeight;
-            float x = width() - textWidth - 5;
-            float y = 5 + i * m_lineHeight - rest;
+            double x = width() - textWidth - 5;
+            double y = i * m_lineHeight - rest + 3;
 
-            QRectF bgRect(0, y, width(), textHeight);
+            QRectF bgRect;
+            if (i == 0)
+                bgRect = QRectF(0, y - 5, width(), textHeight + 4);
+            else
+                bgRect = QRectF(0, y, width(), textHeight);
+
             QColor linenumbersBg(Npanda::common::shTheme.editorColor(KSyntaxHighlighting::Theme::IconBorder));
             if (linenumbersBg != QColor("#000000"))
             {
@@ -85,7 +95,7 @@ class LineNumbers : public QQuickPaintedItem
             // paint numbers
             if (i < numLines)
             {
-                QRectF textRect(x, y, textWidth, textHeight);
+                QRectF textRect(x, y + 5, textWidth, textHeight + 3);
                 // Current & Selected
                 if (lineNumber >= selectedTextStartLine && lineNumber < selectedTextStartLine + numLinesSelected || lineNumber == cursorLine)
                     painter->setPen(Npanda::common::shTheme.editorColor(KSyntaxHighlighting::Theme::CurrentLineNumber));
@@ -120,7 +130,7 @@ class LineNumbers : public QQuickPaintedItem
   signals:
     void lineCountChanged(int lineCount);
     void scrollYChanged(int scrollY);
-    void lineHeightChanged(float lineHeight);
+    void lineHeightChanged(double lineHeight);
     void textChanged(QString text);
     void cursorPositionChanged(int cursorPosition);
 
@@ -147,7 +157,7 @@ class LineNumbers : public QQuickPaintedItem
         emit scrollYChanged(scrollY);
     }
 
-    void setLineHeight(float lineHeight)
+    void setLineHeight(double lineHeight)
     {
         if (m_lineHeight == lineHeight)
             return;
@@ -196,7 +206,7 @@ class LineNumbers : public QQuickPaintedItem
     ConfigManager *cfManager = new ConfigManager;
     int m_lineCount = 0;
     int m_scrollY = 0;
-    float m_lineHeight = 0;
+    double m_lineHeight = 0;
     int m_cursorPosition = 0;
     QString m_text;
     int m_selectionStart = 0;

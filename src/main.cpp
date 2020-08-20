@@ -2,7 +2,8 @@
 #include "/settings/configmanager.h"
 #include "CodeEditor/Backend/codeeditorbackend.h"
 #include "CodeEditor/Backend/linenumbers.hpp"
-#include "aboutwindowBackend.hpp"
+#include "aboutwindowbackend.hpp"
+#include "preferenceswindowbackend.hpp"
 
 #include <QApplication>
 #include <QQmlApplicationEngine>
@@ -24,13 +25,18 @@ int main(int argc, char *argv[])
     app.setApplicationName("Notepanda");
     app.setApplicationVersion("0.1.6");
 
+#ifdef Q_OS_WINDOWS
+    app.setFont(QFont("Segoe UI"));
+#endif
+
     QQmlApplicationEngine engine;
 
     QQuickStyle::setStyle("Material");
 
     qmlRegisterType<CodeEditorBackend>("CodeEditorBackend", 1, 0, "CodeEditorBackend");
     qmlRegisterType<LineNumbers>("LineNumbers", 1, 0, "LineNumbers");
-    qmlRegisterType<AboutwindowBackend>("AboutwindowBackend", 1, 0, "AboutwindowBackend");
+    qmlRegisterType<AboutWindowBackend>("AboutWindowBackend", 1, 0, "AboutWindowBackend");
+    qmlRegisterType<PreferencesWindowBackend>("PreferencesWindowBackend", 1, 0, "PreferencesWindowBackend");
     qmlRegisterType<ConfigManager>("ConfigManager", 1, 0, "ConfigManager");
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));

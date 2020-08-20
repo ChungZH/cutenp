@@ -69,6 +69,7 @@ void ConfigManager::save()
     settings->setValue("ColorTheme", QVariant(m_editorColorTheme));
     settings->setValue("TabSize", QVariant(m_editorTabSize));
     settings->setValue("IndentMode", QVariant(m_editorIndentMode));
+    settings->endGroup();
 }
 
 /**
@@ -78,7 +79,6 @@ void ConfigManager::readGeneralSettings()
 {
     if (settings->contains("Editor/FontFamily"))
     {
-
         m_editorFontFamily = settings->value("Editor/FontFamily").toString();
     }
     else
@@ -89,6 +89,12 @@ void ConfigManager::readGeneralSettings()
     m_editorTabSize = settings->value("Editor/TabSize", 4).toInt();
     m_editorIndentMode = settings->value("Editor/IndentMode", "Spaces").toString();
     m_editorColorTheme = settings->value("Editor/ColorTheme", "Default").toString();
+
+    editorFontFamilyChanged();
+    editorFontSizeChanged();
+    editorTabSizeChanged();
+    editorIndentModeChanged();
+    editorColorThemeChanged();
 }
 
 QString ConfigManager::editorFontFamily() const
@@ -98,6 +104,7 @@ QString ConfigManager::editorFontFamily() const
 void ConfigManager::setEditorFontFamily(const QString &fontname)
 {
     m_editorFontFamily = fontname;
+    editorFontFamilyChanged();
 }
 
 int ConfigManager::editorFontSize() const
@@ -107,6 +114,7 @@ int ConfigManager::editorFontSize() const
 void ConfigManager::setEditorFontSize(const int &fontsize)
 {
     m_editorFontSize = fontsize;
+    editorFontSizeChanged();
 }
 
 QString ConfigManager::editorColorTheme() const
@@ -116,6 +124,7 @@ QString ConfigManager::editorColorTheme() const
 void ConfigManager::setEditorColorTheme(const QString &ctname)
 {
     m_editorColorTheme = ctname;
+    editorColorThemeChanged();
 }
 
 int ConfigManager::editorTabSize() const
@@ -125,6 +134,7 @@ int ConfigManager::editorTabSize() const
 void ConfigManager::setEditorTabSize(const int &tabsize)
 {
     m_editorTabSize = tabsize;
+    editorTabSizeChanged();
 }
 
 QString ConfigManager::editorIndentMode() const
@@ -134,4 +144,5 @@ QString ConfigManager::editorIndentMode() const
 void ConfigManager::setEditorIndentMode(const QString &indentmode)
 {
     m_editorIndentMode = indentmode;
+    editorIndentModeChanged();
 }

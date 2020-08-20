@@ -32,7 +32,7 @@ class ConfigManager : public QObject
   public:
     explicit ConfigManager(QObject *parent = nullptr);
     Q_INVOKABLE void save();
-    void readGeneralSettings();
+    Q_INVOKABLE void readGeneralSettings();
 
     static bool readJsonFile(QIODevice &device, QSettings::SettingsMap &map);
     static bool writeJsonFile(QIODevice &device, const QSettings::SettingsMap &map);

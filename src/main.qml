@@ -124,6 +124,9 @@ ApplicationWindow {
 
     PreferencesWindow {
         id: m_preferencesWindow
+        onVisibleChanged: {
+            m_codeEditor.configChanged()
+        }
     }
 
     CodeEditor {

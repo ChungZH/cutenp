@@ -11,6 +11,7 @@
 CodeEditorBackend::CodeEditorBackend(QObject *parent) : QObject(parent)
 {
     m_fileName = "Untitled";
+    for (const auto &theme : m_repository.themes()) Npanda::common::shThemeList.push_back(theme.name());
 }
 
 QUrl CodeEditorBackend::fileUrl() const
@@ -26,6 +27,11 @@ QString CodeEditorBackend::fileName() const
 QString CodeEditorBackend::text() const
 {
     return m_text;
+}
+
+QColor CodeEditorBackend::bgColor() const
+{
+    return m_bgColor;
 }
 
 void CodeEditorBackend::setFileUrl(const QUrl &fileUrl)
@@ -52,8 +58,7 @@ void CodeEditorBackend::setFileName(const QString &fileName)
         m_highlighter = new KSyntaxHighlighting::SyntaxHighlighter(m_doc->textDocument());
         // MAGIC! DON'T TOUCH
 
-        m_highlighter->setTheme(m_repository.defaultTheme(KSyntaxHighlighting::Repository::LightTheme));
-        Npanda::common::shTheme = m_highlighter->theme();
+        setTheme(m_repository.defaultTheme(KSyntaxHighlighting::Repository::LightTheme));
     }
 
     const auto def = m_repository.definitionForFileName(fileName);
@@ -73,6 +78,14 @@ void CodeEditorBackend::setText(const QString &text)
     m_text = text;
 
     emit textChanged(text);
+}
+
+void CodeEditorBackend::setBgColor(const QColor &bgColor)
+{
+    if (m_bgColor == bgColor)
+        return;
+    m_bgColor = bgColor;
+    emit bgColorChanged(bgColor);
 }
 
 bool CodeEditorBackend::load()
@@ -131,4 +144,21 @@ bool CodeEditorBackend::saveAs()
         return false;
 
     return true;
+}
+
+bool CodeEditorBackend::updateShTheme(const QString &themeName)
+{
+    if (m_fileName.isEmpty() || m_fileName == "Untitled")
+        return false;
+    const auto theme = m_repository.theme(themeName);
+    setTheme(theme);
+    return true;
+}
+
+void CodeEditorBackend::setTheme(const KSyntaxHighlighting::Theme &theme)
+{
+    m_highlighter->setTheme(theme);
+    m_highlighter->rehighlight();
+    Npanda::common::shTheme = m_highlighter->theme();
+    setBgColor(theme.editorColor(KSyntaxHighlighting::Theme::BackgroundColor));
 }

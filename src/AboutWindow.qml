@@ -3,7 +3,7 @@ import QtQuick.Controls 2.5
 import QtQuick.Controls.Universal 2.3
 import QtQuick.Window 2.10
 
-import AboutwindowBackend 1.0
+import AboutWindowBackend 1.0
 
 Window {
     title: qsTr("About Notepanda")
@@ -94,7 +94,7 @@ Window {
         }
     }
 
-    AboutwindowBackend {
+    AboutWindowBackend {
         id: backend
     }
 }

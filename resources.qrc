@@ -4,5 +4,6 @@
         <file>assets/CREDIT.md</file>
         <file>assets/banner.png</file>
         <file>assets/horizontal-logo-text.png</file>
+        <file alias="/i/text_fields-24px.svg">assets/icons/text_fields-24px.svg</file>
     </qresource>
 </RCC>
