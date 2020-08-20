@@ -97,7 +97,7 @@ class LineNumbers : public QQuickPaintedItem
             {
                 QRectF textRect(x, y + 5, textWidth, textHeight + 3);
                 // Current & Selected
-                if (lineNumber >= selectedTextStartLine && lineNumber < selectedTextStartLine + numLinesSelected || lineNumber == cursorLine)
+                if ((lineNumber >= selectedTextStartLine && lineNumber < selectedTextStartLine + numLinesSelected) || lineNumber == cursorLine)
                     painter->setPen(Npanda::common::shTheme.editorColor(KSyntaxHighlighting::Theme::CurrentLineNumber));
                 else
                     painter->setPen(Npanda::common::shTheme.editorColor(KSyntaxHighlighting::Theme::LineNumbers));
