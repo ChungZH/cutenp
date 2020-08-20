@@ -1,5 +1,5 @@
-#include "/common/nphelpers.h"
-#include "/settings/configmanager.h"
+#include "./common/nphelpers.h"
+#include "./settings/configmanager.h"
 #include "CodeEditor/Backend/codeeditorbackend.h"
 #include "CodeEditor/Backend/linenumbers.hpp"
 #include "aboutwindowbackend.hpp"
