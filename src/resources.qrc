@@ -1,5 +1,0 @@
-<RCC>
-    <qresource prefix="/assets">
-        <file alias="CREDIT.md">assets/CREDIT.md</file>
-    </qresource>
-</RCC>
