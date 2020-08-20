@@ -1,9 +1,9 @@
+#include "./aboutwindowbackend.hpp"
 #include "./common/nphelpers.h"
+#include "./preferenceswindowbackend.hpp"
 #include "./settings/configmanager.h"
 #include "CodeEditor/Backend/codeeditorbackend.h"
 #include "CodeEditor/Backend/linenumbers.hpp"
-#include "aboutwindowbackend.hpp"
-#include "preferenceswindowbackend.hpp"
 
 #include <QApplication>
 #include <QQmlApplicationEngine>
