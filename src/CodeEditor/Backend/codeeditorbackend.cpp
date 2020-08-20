@@ -160,5 +160,5 @@ void CodeEditorBackend::setTheme(const KSyntaxHighlighting::Theme &theme)
     m_highlighter->setTheme(theme);
     m_highlighter->rehighlight();
     Npanda::common::shTheme = m_highlighter->theme();
-    setBgColor(theme.editorColor(KSyntaxHighlighting::Theme::BackgroundColor));
+    setBgColor(m_highlighter->theme().editorColor(KSyntaxHighlighting::Theme::BackgroundColor));
 }
