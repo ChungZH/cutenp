@@ -112,7 +112,6 @@ jobs:
         run: cat 'D:/a/cutenp/cutenp/build/_CPack_Packages/win32/NSIS/NSISOutput.log'  
       - name: debug2
         if: ${{ failure() }}
-        shell: pwsh
         uses: actions/upload-artifact@master
         with:
           name: D:/a/cutenp/cutenp/build/_CPack_Packages/win32/NSIS/NSISOutput.log
