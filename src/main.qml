@@ -224,6 +224,8 @@ ApplicationWindow {
             }
             ToolButton {
                 action: readOnlyAct
+                ToolTip.text: qsTr("Read-Only")
+                ToolTip.visible: hovered
             }
             ToolButton {
                 action: aboutAct

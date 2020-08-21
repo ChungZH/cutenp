@@ -58,9 +58,7 @@ Dialog {
                                 from: 0
                                 value: 1
                                 to: 1
-                                onValueChanged: {
-                                    cfManager.setOpacity(value)
-                                }
+                                onValueChanged: cfManager.setOpacity(value)
                             }
                         }
                     }
@@ -93,9 +91,8 @@ Dialog {
                                 text: cfManager.editorFontFamily
                                 font.pointSize: 10
 
-                                onTextChanged: {
-                                    cfManager.setEditorFontFamily(text)
-                                }
+                                onTextChanged: cfManager.setEditorFontFamily(
+                                                   text)
                             }
 
                             Text {
@@ -110,9 +107,7 @@ Dialog {
                                 editable: true
                                 width: 130
 
-                                onValueChanged: {
-                                    cfManager.editorFontSize = value
-                                }
+                                onValueChanged: cfManager.editorFontSize = value
                             }
 
                             Button {
@@ -149,9 +144,8 @@ Dialog {
                                                 cfManager.editorColorTheme)
                                     backend.currentIndex
                                 }
-                                onCurrentTextChanged: {
-                                    cfManager.setEditorColorTheme(currentText)
-                                }
+                                onCurrentTextChanged: cfManager.setEditorColorTheme(
+                                                          currentText)
                             }
                         }
                     }
@@ -180,9 +174,22 @@ Dialog {
                                         1
                                 }
 
-                                onCurrentTextChanged: {
-                                    cfManager.setEditorIndentMode(currentText)
-                                }
+                                onCurrentTextChanged: cfManager.setEditorIndentMode(
+                                                          currentText)
+                            }
+
+                            Text {
+                                id: tabSize
+                                text: qsTr("Tab Size: ")
+                                font.pointSize: 10
+                            }
+                            SpinBox {
+                                value: cfManager.editorTabSize
+                                font.pointSize: 10
+                                editable: true
+                                width: 130
+
+                                onValueChanged: cfManager.editorTabSize = value
                             }
                         }
                     }
