@@ -106,7 +106,7 @@ jobs:
           cmake --build . 
           choco install tree
           windeployqt notepanda.exe --no-translations --qmldir "$env:Qt5_DIR/qml" --release
-          tree -a
+          tree .
           cmake --build . --target package --parallel $(nproc)
       - name: debug
         if: ${{ failure() }}
