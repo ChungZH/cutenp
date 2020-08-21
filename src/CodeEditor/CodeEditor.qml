@@ -113,11 +113,6 @@ Item {
             selectByMouse: true
             onTextChanged: {
                 changedSinceLastSave = true
-                if (!isStarted) {
-                    // Init KSyntaxHighlighting
-                    isStarted = true
-                    backend.fileName = "Untitled"
-                }
             }
 
             background: Rectangle {
