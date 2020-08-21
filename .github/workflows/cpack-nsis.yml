@@ -104,6 +104,8 @@ jobs:
           cd build
           cmake .. -GNinja -DCMAKE_BUILD_TYPE=Release -DKF5SyntaxHighlighting_DIR="C:/Program Files (x86)/ECM/lib/cmake/KF5SyntaxHighlighting" -DBUILD_NSIS=ON
           cmake --build . 
+          choco install tree
+          tree -a
           windeployqt notepanda.exe --no-translations --qmldir "$env:Qt5_DIR/qml" --release
           cmake --build . --target package --parallel $(nproc)
       - name: debug
