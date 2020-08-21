@@ -106,6 +106,10 @@ jobs:
           cmake --build . 
           windeployqt notepanda.exe --no-translations --qmldir "$env:Qt5_DIR/qml" --release
           cmake --build . --target package --parallel $(nproc)
+      - name: debug
+        if: ${{ failure() }}
+        shell: bash
+        run: cat 'D:/a/cutenp/cutenp/build/_CPack_Packages/win32/NSIS/NSISOutput.log'          
       - name: Windows - Get package name
         shell: bash
         id: get_package
