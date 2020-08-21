@@ -113,6 +113,11 @@ Window {
                             }
                         }
                     }
+                    GroupBox {
+                        id: behaviorGroup
+                        title: qsTr("Behavior")
+                        font.pointSize: 13
+                    }
                 }
             }
         }
