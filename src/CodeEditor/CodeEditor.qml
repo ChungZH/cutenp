@@ -17,6 +17,8 @@ Item {
     property bool changedSinceLastSave: false
     property bool isUnsavedFile: true
 
+    property var isStarted: false
+
     function openFile(fileUrl) {
         backend.fileUrl = fileUrl
         backend.load()
@@ -111,6 +113,11 @@ Item {
             selectByMouse: true
             onTextChanged: {
                 changedSinceLastSave = true
+                if (!isStarted) {
+                    // Init KSyntaxHighlighting
+                    isStarted = true
+                    backend.fileName = "Untitled"
+                }
             }
 
             background: Rectangle {

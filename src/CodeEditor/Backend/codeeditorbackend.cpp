@@ -11,6 +11,8 @@
 CodeEditorBackend::CodeEditorBackend(QObject *parent) : QObject(parent)
 {
     m_fileName = "Untitled";
+    m_bgColor = QColor("#FFFFFF");
+    qDebug() << m_bgColor;
     for (const auto &theme : m_repository.themes()) Npanda::common::shThemeList.push_back(theme.name());
 }
 
@@ -47,7 +49,7 @@ void CodeEditorBackend::setFileUrl(const QUrl &fileUrl)
 
 void CodeEditorBackend::setFileName(const QString &fileName)
 {
-    if (m_fileName == fileName)
+    if (m_fileName == fileName && fileName != "Untitled")
         return;
     if (m_fileName.isEmpty() || m_fileName == "Untitled")
     {
