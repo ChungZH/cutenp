@@ -196,8 +196,8 @@ jobs:
           cmake --build . --parallel $(nproc)
           cmake --install .
           cd Release
-          ls ../../../Qt/5.14.2/
-          windeployqt notepanda.exe --no-translations --qmldir "../../../Qt/5.14.2/*/bin/qml" --release
+          ls $Qt5_DIR
+          windeployqt notepanda.exe --no-translations --qmldir "$Qt5_DIR/qml" --release
       - name: Win - ${{ matrix.arch }} - ${{ matrix.qt_version }} - Create 7z Release
         if: matrix.platform == 'windows-latest'
         uses: DuckSoft/create-7z-action@v1.0
