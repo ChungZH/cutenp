@@ -8,8 +8,8 @@ import "./CodeEditor" 1.0
 ApplicationWindow {
     id: window
     visible: true
-    width: 500
-    height: 450
+    minimumWidth: 550
+    minimumHeight: 500
     font.family: "Microsoft YaHei"
     title: m_codeEditor.title
 
@@ -67,7 +67,7 @@ ApplicationWindow {
 
             Action {
                 text: qsTr("Preferences")
-                onTriggered: m_preferencesWindow.show()
+                onTriggered: m_preferencesWindow.open()
                 shortcut: StandardKey.Preferences
             }
 
@@ -124,8 +124,10 @@ ApplicationWindow {
 
     PreferencesWindow {
         id: m_preferencesWindow
+
         onVisibleChanged: {
-            m_codeEditor.configChanged()
+            if (result === Dialog.Accepted)
+                m_codeEditor.configChanged()
         }
     }
 

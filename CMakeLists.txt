@@ -186,8 +186,6 @@ endif()
 
 include(CPack)
 
-
 target_compile_definitions(notepanda
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
-target_link_libraries(notepanda
-  PRIVATE Qt5::Core Qt5::Widgets Qt5::Quick Qt5::QuickControls2 KF5::SyntaxHighlighting)
+target_link_libraries(notepanda Qt5::Core Qt5::Widgets Qt5::Quick Qt5::QuickControls2 KF5::SyntaxHighlighting)
