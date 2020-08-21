@@ -246,9 +246,9 @@ jobs:
           cd build
           cmake .. -GNinja -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_DEPLOYMENT_TARGET=10.13 -DDS_STORE_SCRIPT=ON
           cmake --build . 
-          tree -a
           sudo cmake --install .
-          macdeployqt notepanda -dmg
+          tree -a
+          macdeployqt notepanda.app -dmg
       - name: macOS - ${{ matrix.qt_version }} - Uploading Artifact
         if: matrix.platform == 'macos-latest'
         uses: actions/upload-artifact@master
