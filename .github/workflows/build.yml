@@ -248,7 +248,7 @@ jobs:
           cmake --build . 
           tree -a
           sudo cmake --install .
-          macdeployqt notepanda.app -dmg
+          macdeployqt notepanda -dmg
       - name: macOS - ${{ matrix.qt_version }} - Uploading Artifact
         if: matrix.platform == 'macos-latest'
         uses: actions/upload-artifact@master
