@@ -54,6 +54,7 @@ Item {
     function configChanged() {
         configManager.readGeneralSettings()
         lineNumbers.updateConfigs()
+        lineNumbers.update()
         backend.updateShTheme(configManager.editorColorTheme)
     }
 
@@ -110,6 +111,10 @@ Item {
             selectByMouse: true
             onTextChanged: {
                 changedSinceLastSave = true
+            }
+
+            background: Rectangle {
+                color: backend.bgColor
             }
         }
     }

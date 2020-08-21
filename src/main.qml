@@ -2,6 +2,7 @@ import QtQuick 2.9
 import QtQuick.Controls 2.5
 import QtQuick.Controls.Material 2.3
 import QtQuick.Dialogs 1.3
+import ConfigManager 1.0
 
 import "./CodeEditor" 1.0
 
@@ -13,6 +14,45 @@ ApplicationWindow {
     font.family: "Microsoft YaHei"
     title: m_codeEditor.title
 
+    opacity: cfManager.opacity
+
+    // Actions
+    Action {
+        id: newAct
+        onTriggered: m_codeEditor.clear()
+        shortcut: StandardKey.New
+        icon.source: "qrc:/i/add.svg"
+    }
+    Action {
+        id: openAct
+        onTriggered: openDialog.open()
+        shortcut: StandardKey.Open
+        icon.source: "qrc:/i/open.svg"
+    }
+    Action {
+        id: saveAct
+        onTriggered: m_codeEditor.save()
+        shortcut: StandardKey.Save
+        icon.source: "qrc:/i/save.svg"
+    }
+    Action {
+        id: saveAsAct
+        onTriggered: m_codeEditor.saveAs()
+        shortcut: StandardKey.SaveAs
+        icon.source: "qrc:/i/save_as.svg"
+    }
+    Action {
+        id: preferencesAct
+        onTriggered: m_preferencesWindow.open()
+        shortcut: StandardKey.Preferences
+        icon.source: "qrc:/i/settings.svg"
+    }
+    Action {
+        id: quitAct
+        onTriggered: Qt.quit()
+        shortcut: StandardKey.Quit
+        icon.source: "qrc:/i/calendar_cancel.svg"
+    }
     // Copy Paste and Cut cannot be in Menu.
     // Because when the MenuBar is clicked,
     // the active focus item is not in the textArea.
@@ -22,98 +62,171 @@ ApplicationWindow {
         onTriggered: m_codeEditor.textArea.copy()
         shortcut: StandardKey.Copy
     }
-
     Action {
         text: qsTr("Paste")
         onTriggered: m_codeEditor.textArea.paste()
         shortcut: StandardKey.Paste
     }
-
     Action {
         text: qsTr("Cut")
         onTriggered: m_codeEditor.textArea.cut()
         shortcut: StandardKey.Cut
     }
+    Action {
+        id: undoAct
+        onTriggered: m_codeEditor.textArea.undo()
+        shortcut: StandardKey.Undo
+        enabled: m_codeEditor.textArea.canUndo
+        icon.source: "qrc:/i/undo.svg"
+    }
+    Action {
+        id: redoAct
+        onTriggered: m_codeEditor.textArea.redo()
+        shortcut: StandardKey.Redo
+        enabled: m_codeEditor.textArea.canRedo
+        icon.source: "qrc:/i/redo.svg"
+    }
+    Action {
+        id: readOnlyAct
+
+        onTriggered: m_codeEditor.setReadOnly(!m_codeEditor.textArea.readOnly)
+
+        icon.source: "qrc:/i/read_only.svg"
+    }
+    Action {
+        id: aboutAct
+        onTriggered: m_aboutWindow.show()
+        icon.source: "qrc:/i/info.svg"
+    }
 
     menuBar: MenuBar {
         Menu {
             title: qsTr("&File")
-            Action {
+            MenuItem {
+                action: newAct
                 text: qsTr("&New")
-                onTriggered: m_codeEditor.clear()
-                shortcut: StandardKey.New
+                ToolTip.text: qsTr("New file")
+                ToolTip.visible: hovered
             }
-
-            Action {
+            MenuItem {
+                action: openAct
                 text: qsTr("&Open")
-                onTriggered: openDialog.open()
-                shortcut: StandardKey.Open
+                ToolTip.text: qsTr("Open file")
+                ToolTip.visible: hovered
             }
-
-            Action {
+            MenuItem {
+                action: saveAct
                 text: qsTr("&Save")
-                onTriggered: m_codeEditor.save()
-
-                shortcut: StandardKey.Save
+                ToolTip.text: qsTr("Save file")
+                ToolTip.visible: hovered
             }
-
-            Action {
+            MenuItem {
+                action: saveAsAct
                 text: qsTr("Save &As")
-                onTriggered: m_codeEditor.saveAs()
-
-                shortcut: StandardKey.SaveAs
+                ToolTip.text: qsTr("Save file as")
+                ToolTip.visible: hovered
             }
+
             MenuSeparator {}
 
-            Action {
+            MenuItem {
+                action: preferencesAct
                 text: qsTr("Preferences")
-                onTriggered: m_preferencesWindow.open()
-                shortcut: StandardKey.Preferences
+                ToolTip.text: qsTr("Open preferences window")
+                ToolTip.visible: hovered
             }
 
             MenuSeparator {}
 
-            Action {
+            MenuItem {
+                action: quitAct
                 text: qsTr("&Quit")
-                onTriggered: Qt.quit()
+                ToolTip.text: qsTr("Quit")
+                ToolTip.visible: hovered
             }
         }
         Menu {
             title: qsTr("&Edit")
 
-            Action {
+            MenuItem {
                 text: qsTr("Undo")
-                onTriggered: m_codeEditor.textArea.undo()
-                shortcut: StandardKey.Undo
-                enabled: m_codeEditor.textArea.canUndo
+                action: undoAct
             }
-            Action {
+            MenuItem {
                 text: qsTr("Redo")
-                onTriggered: m_codeEditor.textArea.redo()
-                shortcut: StandardKey.Redo
-                enabled: m_codeEditor.textArea.canRedo
+                action: redoAct
             }
 
             MenuSeparator {}
 
-            Action {
+            MenuItem {
                 text: {
                     if (!m_codeEditor.textArea.readOnly)
                         qsTr("Turn on Read-Only mode")
                     else
                         qsTr("Turn off Read-Only mode")
                 }
-                onTriggered: {
-                    m_codeEditor.setReadOnly(!m_codeEditor.textArea.readOnly)
-                }
+                action: readOnlyAct
             }
         }
         Menu {
             title: qsTr("&Help")
 
-            Action {
+            MenuItem {
                 text: "&About"
-                onTriggered: m_aboutWindow.show()
+                action: aboutAct
+            }
+        }
+    }
+
+    header: ToolBar {
+        background: Rectangle {
+            implicitHeight: 40
+            color: Material.color(Material.Grey)
+        }
+        Row {
+            spacing: 2
+            ToolButton {
+                action: newAct
+                ToolTip.text: qsTr("New file")
+                ToolTip.visible: hovered
+            }
+            ToolButton {
+                action: openAct
+                ToolTip.text: qsTr("Open file")
+                ToolTip.visible: hovered
+            }
+            ToolButton {
+                action: saveAct
+                ToolTip.text: qsTr("Save file")
+                ToolTip.visible: hovered
+            }
+            ToolButton {
+                action: saveAsAct
+                ToolTip.text: qsTr("Save file as")
+                ToolTip.visible: hovered
+            }
+            ToolButton {
+                action: preferencesAct
+                ToolTip.text: qsTr("Open preferences window")
+                ToolTip.visible: hovered
+            }
+            ToolButton {
+                action: quitAct
+                ToolTip.text: qsTr("Quit")
+                ToolTip.visible: hovered
+            }
+            ToolButton {
+                action: undoAct
+            }
+            ToolButton {
+                action: redoAct
+            }
+            ToolButton {
+                action: readOnlyAct
+            }
+            ToolButton {
+                action: aboutAct
             }
         }
     }
@@ -126,8 +239,10 @@ ApplicationWindow {
         id: m_preferencesWindow
 
         onVisibleChanged: {
-            if (result === Dialog.Accepted)
+            if (result === Dialog.Accepted) {
                 m_codeEditor.configChanged()
+                cfManager.readGeneralSettings()
+            }
         }
     }
 
@@ -142,5 +257,9 @@ ApplicationWindow {
         onAccepted: {
             m_codeEditor.openFile(openDialog.fileUrl)
         }
+    }
+
+    ConfigManager {
+        id: cfManager
     }
 }

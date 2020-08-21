@@ -12,131 +12,178 @@ Dialog {
     height: parent.height
     standardButtons: Dialog.Ok | Dialog.Cancel
 
-    Column {
-        id: column
-        anchors.fill: parent
-        spacing: 20
+    TabBar {
+        id: bar
+        width: parent.width
+        currentIndex: 1
 
-        TabBar {
-            id: bar
-            width: parent.width
-            currentIndex: 1
-            TabButton {
-                text: qsTr("General")
-            }
-            TabButton {
-                text: qsTr("Text Editor")
+        Material.accent: Material.LightBlue
+
+        TabButton {
+            text: qsTr("General")
+        }
+        TabButton {
+            text: qsTr("Text Editor")
+        }
+    }
+
+    StackLayout {
+        anchors.topMargin: 6
+        anchors.top: bar.bottom
+        anchors.bottom: parent.bottom
+        width: parent.width
+        currentIndex: bar.currentIndex
+
+        Item {
+            id: generalTab
+            ScrollView {
+                anchors.fill: parent
+                Grid {
+                    spacing: 2
+                    columns: 2
+                    GroupBox {
+                        id: appearanceGroup
+                        title: qsTr("Appearance")
+                        font.pointSize: 13
+
+                        Grid {
+                            spacing: 5
+                            columns: 2
+                            Text {
+                                id: opacity
+                                text: qsTr("Opacity: ")
+                                font.pointSize: 10
+                            }
+                            Slider {
+                                from: 0
+                                value: 1
+                                to: 1
+                                onValueChanged: {
+                                    cfManager.setOpacity(value)
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
 
-        StackLayout {
-            anchors.topMargin: 6
-            anchors.left: parent.left
-            anchors.leftMargin: 10
-            anchors.top: bar.bottom
-            currentIndex: bar.currentIndex
+        Item {
+            id: textEditorTab
+            ScrollView {
+                anchors.fill: parent
+                Grid {
+                    spacing: 5
+                    columns: 2
 
-            Item {
-                id: generalTab
-            }
+                    GroupBox {
+                        id: fontGroup
+                        title: qsTr("Font")
+                        font.pointSize: 13
 
-            Item {
-                id: textEditorTab
+                        Grid {
+                            spacing: 5
+                            columns: 2
+                            Text {
+                                id: fontFamily
+                                text: qsTr("Font Family: ")
+                                font.pointSize: 10
+                            }
+                            TextField {
+                                text: cfManager.editorFontFamily
+                                font.pointSize: 10
 
-                ScrollView {
-                    ScrollBar.horizontal.policy: ScrollBar.AlwaysOn
-                    ScrollBar.vertical.policy: ScrollBar.AlwaysOn
-
-                    Grid {
-                        spacing: 5
-                        columns: 2
-
-                        GroupBox {
-                            id: fontGroup
-                            title: qsTr("Font")
-                            font.pointSize: 13
-
-                            Grid {
-                                spacing: 5
-                                columns: 2
-                                Text {
-                                    id: fontFamily
-                                    text: qsTr("Font Family: ")
-                                    font.pointSize: 10
+                                onTextChanged: {
+                                    cfManager.setEditorFontFamily(text)
                                 }
-                                TextField {
-                                    text: cfManager.editorFontFamily
-                                    font.pointSize: 10
+                            }
 
-                                    onTextChanged: {
-                                        cfManager.setEditorFontFamily(text)
-                                    }
+                            Text {
+                                id: fontSize
+                                text: qsTr("Font Size: ")
+                                font.pointSize: 10
+                            }
+                            SpinBox {
+                                value: cfManager.editorFontSize
+                                font.pointSize: 10
+                                inputMethodHints: Qt.ImhFormattedNumbersOnly
+                                editable: true
+                                width: 130
+
+                                onValueChanged: {
+                                    cfManager.editorFontSize = value
                                 }
+                            }
 
-                                Text {
-                                    id: fontSize
-                                    text: qsTr("Font Size: ")
-                                    font.pointSize: 10
+                            Button {
+                                icon.source: "qrc:/i/text_font.svg"
+                                onClicked: {
+                                    fontDialog.open()
+                                    width: 58
+                                    height: 58
                                 }
-                                SpinBox {
-                                    value: cfManager.editorFontSize
-                                    font.pointSize: 10
-                                    inputMethodHints: Qt.ImhFormattedNumbersOnly
-                                    editable: true
-                                    width: 130
+                                highlighted: true
+                                Material.accent: Material.Orange
+                            }
+                        }
+                    }
+                    GroupBox {
+                        id: shGroup // Syntax Highlighting
+                        title: qsTr("Syntax Highlighting")
+                        font.pointSize: 13
+                        Grid {
+                            columns: 2
+                            spacing: 5
 
-                                    onValueChanged: {
-                                        cfManager.editorFontSize = value
-                                    }
+                            Text {
+                                id: shTheme
+                                text: qsTr("Theme")
+                                font.pointSize: 10
+                            }
+
+                            ComboBox {
+                                model: backend.shThemeList
+                                font.pointSize: 10
+                                currentIndex: {
+                                    backend.setCurrentName(
+                                                cfManager.editorColorTheme)
+                                    backend.currentIndex
                                 }
-
-                                Button {
-                                    icon.source: "qrc:/i/text_fields-24px.svg"
-                                    onClicked: {
-                                        fontDialog.open()
-                                        width: 58
-                                        height: 58
-                                    }
-                                    highlighted: true
-                                    Material.accent: Material.Orange
+                                onCurrentTextChanged: {
+                                    cfManager.setEditorColorTheme(currentText)
                                 }
                             }
                         }
-                        GroupBox {
-                            id: shGroup // Syntax Highlighting
-                            title: qsTr("Syntax Highlighting")
-                            font.pointSize: 13
-                            Grid {
-                                columns: 2
-                                spacing: 5
+                    }
 
-                                Text {
-                                    id: shTheme
-                                    text: qsTr("Theme")
-                                    font.pointSize: 10
+                    GroupBox {
+                        id: behaviorGroup
+                        title: qsTr("Behavior")
+                        font.pointSize: 13
+
+                        Grid {
+                            columns: 2
+                            spacing: 5
+
+                            Text {
+                                id: tabPolicy
+                                text: qsTr("Tab Policy: ")
+                                font.pointSize: 10
+                            }
+                            ComboBox {
+                                model: ["Spaces", "Tabs"]
+                                font.pointSize: 10
+                                currentIndex: {
+                                    if (cfManager.editorIndentMode == "Spaces")
+                                        0
+                                    else
+                                        1
                                 }
 
-                                ComboBox {
-                                    model: backend.shThemeList
-                                    font.pointSize: 10
-                                    editable: true
-                                    currentIndex: {
-                                        backend.setCurrentName(
-                                                    cfManager.editorColorTheme)
-                                        backend.currentIndex
-                                    }
-                                    onCurrentTextChanged: {
-                                        cfManager.setEditorColorTheme(
-                                                    currentText)
-                                    }
+                                onCurrentTextChanged: {
+                                    cfManager.setEditorIndentMode(currentText)
                                 }
                             }
-                        }
-
-                        GroupBox {
-                            id: behaviorGroup
-                            title: qsTr("Behavior")
-                            font.pointSize: 13
                         }
                     }
                 }
@@ -157,8 +204,7 @@ Dialog {
         monospacedFonts: true
         font: Qt.font({
                           "family": cfManager.editorFontFamily,
-                          "pointSize": cfManager.editorFontSize,
-                          "weight": Font.Normal
+                          "pointSize": cfManager.editorFontSize
                       })
         onAccepted: {
             cfManager.setEditorFontFamily(font.family)

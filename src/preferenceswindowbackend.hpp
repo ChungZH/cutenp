@@ -8,18 +8,23 @@
 class PreferencesWindowBackend : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QStringList shThemeList MEMBER m_shThemeList)
+    Q_PROPERTY(QStringList shThemeList READ shThemeList)
     Q_PROPERTY(int currentIndex READ currentIndex NOTIFY currentIndexChanged)
     Q_PROPERTY(QString currentName MEMBER m_currentName)
 
   public:
     PreferencesWindowBackend()
     {
-        m_shThemeList = Npanda::common::shThemeList;
+    }
+
+    QStringList shThemeList() const
+    {
+        return Npanda::common::shThemeList;
     }
 
     int currentIndex() const
     {
+
         return Npanda::common::shThemeList.indexOf(m_currentName);
     }
 
@@ -34,7 +39,6 @@ class PreferencesWindowBackend : public QObject
 
   private:
     QString m_currentName;
-    QStringList m_shThemeList;
 };
 
 #endif // PREFERENCESWINDOWBACKEND_HPP

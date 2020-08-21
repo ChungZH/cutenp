@@ -63,6 +63,7 @@ bool ConfigManager::writeJsonFile(QIODevice &device, const QSettings::SettingsMa
  */
 void ConfigManager::save()
 {
+    settings->setValue("Opacity", QVariant(m_opacity));
     settings->beginGroup("Editor");
     settings->setValue("FontFamily", QVariant(m_editorFontFamily));
     settings->setValue("FontSize", QVariant(m_editorFontSize));
@@ -89,12 +90,14 @@ void ConfigManager::readGeneralSettings()
     m_editorTabSize = settings->value("Editor/TabSize", 4).toInt();
     m_editorIndentMode = settings->value("Editor/IndentMode", "Spaces").toString();
     m_editorColorTheme = settings->value("Editor/ColorTheme", "Default").toString();
+    m_opacity = settings->value("Opacity", 1).toReal();
 
     editorFontFamilyChanged();
     editorFontSizeChanged();
     editorTabSizeChanged();
     editorIndentModeChanged();
     editorColorThemeChanged();
+    opacityChanged();
 }
 
 QString ConfigManager::editorFontFamily() const
@@ -141,8 +144,20 @@ QString ConfigManager::editorIndentMode() const
 {
     return m_editorIndentMode;
 }
+
 void ConfigManager::setEditorIndentMode(const QString &indentmode)
 {
     m_editorIndentMode = indentmode;
     editorIndentModeChanged();
+}
+
+qreal ConfigManager::opacity() const
+{
+    return m_opacity;
+}
+
+void ConfigManager::setOpacity(const qreal &opacity)
+{
+    m_opacity = opacity;
+    opacityChanged();
 }

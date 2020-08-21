@@ -28,6 +28,7 @@ class ConfigManager : public QObject
     Q_PROPERTY(QString editorColorTheme READ editorColorTheme WRITE setEditorColorTheme NOTIFY editorColorThemeChanged)
     Q_PROPERTY(int editorTabSize READ editorTabSize WRITE setEditorTabSize NOTIFY editorTabSizeChanged)
     Q_PROPERTY(QString editorIndentMode READ editorIndentMode WRITE setEditorIndentMode NOTIFY editorIndentModeChanged)
+    Q_PROPERTY(qreal opacity READ opacity WRITE setOpacity NOTIFY opacityChanged)
 
   public:
     explicit ConfigManager(QObject *parent = nullptr);
@@ -43,12 +44,14 @@ class ConfigManager : public QObject
     QString editorColorTheme() const;
     int editorTabSize() const;
     QString editorIndentMode() const;
+    qreal opacity() const;
   public slots:
     void setEditorFontFamily(const QString &fontname);
     void setEditorFontSize(const int &fontsize);
     void setEditorColorTheme(const QString &ctname);
     void setEditorTabSize(const int &tabsize);
     void setEditorIndentMode(const QString &indentmode);
+    void setOpacity(const qreal &opacity);
 
   signals:
     void editorFontFamilyChanged();
@@ -56,6 +59,7 @@ class ConfigManager : public QObject
     void editorColorThemeChanged();
     void editorIndentModeChanged();
     void editorTabSizeChanged();
+    void opacityChanged();
 
   private:
     QSettings *settings;
@@ -65,6 +69,7 @@ class ConfigManager : public QObject
     QString m_editorColorTheme;
     int m_editorTabSize;
     QString m_editorIndentMode;
+    qreal m_opacity;
 };
 
 #endif // CONFIGMANAGER_H

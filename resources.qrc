@@ -4,6 +4,27 @@
         <file>assets/CREDIT.md</file>
         <file>assets/banner.png</file>
         <file>assets/horizontal-logo-text.png</file>
-        <file alias="/i/text_fields-24px.svg">assets/icons/text_fields-24px.svg</file>
+        <file alias="/i/add.svg">assets/fluentui-icon/add.svg</file>
+        <file alias="/i/clipboard.svg">assets/fluentui-icon/clipboard.svg</file>
+        <file alias="/i/color_background.svg">assets/fluentui-icon/color_background.svg</file>
+        <file alias="/i/copy.svg">assets/fluentui-icon/copy.svg</file>
+        <file alias="/i/cut.svg">assets/fluentui-icon/cut.svg</file>
+        <file alias="/i/delete.svg">assets/fluentui-icon/delete.svg</file>
+        <file alias="/i/document.svg">assets/fluentui-icon/document.svg</file>
+        <file alias="/i/document_edit.svg">assets/fluentui-icon/document_edit.svg</file>
+        <file alias="/i/info.svg">assets/fluentui-icon/info.svg</file>
+        <file alias="/i/open.svg">assets/fluentui-icon/open.svg</file>
+        <file alias="/i/pin.svg">assets/fluentui-icon/pin.svg</file>
+        <file alias="/i/preview.svg">assets/fluentui-icon/preview.svg</file>
+        <file alias="/i/print.svg">assets/fluentui-icon/print.svg</file>
+        <file alias="/i/read_only.svg">assets/fluentui-icon/read_only.svg</file>
+        <file alias="/i/redo.svg">assets/fluentui-icon/redo.svg</file>
+        <file alias="/i/save.svg">assets/fluentui-icon/save.svg</file>
+        <file alias="/i/save_as.svg">assets/fluentui-icon/save_as.svg</file>
+        <file alias="/i/settings.svg">assets/fluentui-icon/settings.svg</file>
+        <file alias="/i/sticker.svg">assets/fluentui-icon/sticker.svg</file>
+        <file alias="/i/text_font.svg">assets/fluentui-icon/text_font.svg</file>
+        <file alias="/i/undo.svg">assets/fluentui-icon/undo.svg</file>
+        <file alias="/i/calendar_cancel.svg">assets/fluentui-icon/calendar_cancel.svg</file>
     </qresource>
 </RCC>
