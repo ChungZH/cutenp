@@ -93,7 +93,7 @@ endif()
 if(UNIX AND NOT APPLE AND NOT WIN32)
     install(TARGETS notepanda RUNTIME DESTINATION bin)
     install(FILES assets/notepanda.desktop DESTINATION share/applications)
-    install(FILES images/notepanda.png DESTINATION share/icons/hicolor/256x256/apps)
+    install(FILES assets/notepanda.png DESTINATION share/icons/hicolor/256x256/apps)
 endif()
 
 # Directories to look for dependencies
@@ -115,7 +115,7 @@ set(CPACK_PACKAGE_VENDOR "ChungZH")
 set(CPACK_PACKAGE_VERSION ${VERSION_STRING})
 set(CPACK_PACKAGE_DESCRIPTION "A simple cross-platform notepad.")
 set(CPACK_PACKAGE_HOMEPAGE_URL "https://github.com/ChungZH/notepanda")
-set(CPACK_PACKAGE_ICON "${CMAKE_SOURCE_DIR}/images/panda.ico")
+set(CPACK_PACKAGE_ICON "${CMAKE_SOURCE_DIR}/assets/panda.ico")
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/LICENSE.md")
 
 if(MSVC)
