@@ -197,7 +197,7 @@ jobs:
           cmake --install .
           cd Release
           windeployqt notepanda.exe --no-translations 
-          ls ../../../Qt/*/*/
+          ls ../../../Qt/*/*/*/
       - name: Win - ${{ matrix.arch }} - ${{ matrix.qt_version }} - Create 7z Release
         if: matrix.platform == 'windows-latest'
         uses: DuckSoft/create-7z-action@v1.0
