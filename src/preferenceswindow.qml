@@ -43,6 +43,8 @@ Window {
 
                 Grid {
                     spacing: 5
+                    columns: 2
+
                     GroupBox {
                         id: fontGroup
                         title: qsTr("Font")
