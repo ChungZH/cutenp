@@ -81,12 +81,12 @@ set(SOURCES
 if(ANDROID)
     add_library(notepanda SHARED
       ${SOURCES}
-      ${GUI_TYPES}
+      ${GUI_TYPE}
     )
 else()
     add_executable(notepanda
       ${SOURCES}
-      ${GUI_TYPES}
+      ${GUI_TYPE}
     )
 endif()
 
