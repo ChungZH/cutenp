@@ -196,7 +196,6 @@ jobs:
           cmake --build . --parallel $(nproc)
           cmake --install .
           cd Release
-          ls $env:Qt5_DIR
           windeployqt notepanda.exe --no-translations --qmldir "$env:Qt5_DIR/qml" --release
       - name: Win - ${{ matrix.arch }} - ${{ matrix.qt_version }} - Create 7z Release
         if: matrix.platform == 'windows-latest'
