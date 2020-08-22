@@ -70,6 +70,7 @@ void ConfigManager::save()
     settings->setValue("ColorTheme", QVariant(m_editorColorTheme));
     settings->setValue("TabSize", QVariant(m_editorTabSize));
     settings->setValue("IndentMode", QVariant(m_editorIndentMode));
+    settings->setValue("ShowLineNumbers", QVariant(m_showLineNumbers));
     settings->endGroup();
 }
 
@@ -91,6 +92,7 @@ void ConfigManager::readGeneralSettings()
     m_editorIndentMode = settings->value("Editor/IndentMode", "Spaces").toString();
     m_editorColorTheme = settings->value("Editor/ColorTheme", "Default").toString();
     m_opacity = settings->value("Opacity", 1).toReal();
+    m_showLineNumbers = settings->value("Editor/ShowLineNumbers", true).toBool();
 
     editorFontFamilyChanged();
     editorFontSizeChanged();
@@ -98,6 +100,7 @@ void ConfigManager::readGeneralSettings()
     editorIndentModeChanged();
     editorColorThemeChanged();
     opacityChanged();
+    showLineNumbersChanged();
 }
 
 QString ConfigManager::editorFontFamily() const
@@ -107,7 +110,7 @@ QString ConfigManager::editorFontFamily() const
 void ConfigManager::setEditorFontFamily(const QString &fontname)
 {
     m_editorFontFamily = fontname;
-    editorFontFamilyChanged();
+    emit editorFontFamilyChanged();
 }
 
 int ConfigManager::editorFontSize() const
@@ -117,7 +120,7 @@ int ConfigManager::editorFontSize() const
 void ConfigManager::setEditorFontSize(const int &fontsize)
 {
     m_editorFontSize = fontsize;
-    editorFontSizeChanged();
+    emit editorFontSizeChanged();
 }
 
 QString ConfigManager::editorColorTheme() const
@@ -127,7 +130,7 @@ QString ConfigManager::editorColorTheme() const
 void ConfigManager::setEditorColorTheme(const QString &ctname)
 {
     m_editorColorTheme = ctname;
-    editorColorThemeChanged();
+    emit editorColorThemeChanged();
 }
 
 int ConfigManager::editorTabSize() const
@@ -137,7 +140,7 @@ int ConfigManager::editorTabSize() const
 void ConfigManager::setEditorTabSize(const int &tabsize)
 {
     m_editorTabSize = tabsize;
-    editorTabSizeChanged();
+    emit editorTabSizeChanged();
 }
 
 QString ConfigManager::editorIndentMode() const
@@ -148,7 +151,7 @@ QString ConfigManager::editorIndentMode() const
 void ConfigManager::setEditorIndentMode(const QString &indentmode)
 {
     m_editorIndentMode = indentmode;
-    editorIndentModeChanged();
+    emit editorIndentModeChanged();
 }
 
 qreal ConfigManager::opacity() const
@@ -159,5 +162,16 @@ qreal ConfigManager::opacity() const
 void ConfigManager::setOpacity(const qreal &opacity)
 {
     m_opacity = opacity;
-    opacityChanged();
+    emit opacityChanged();
+}
+
+void ConfigManager::setShowLineNumbers(const bool &show)
+{
+    m_showLineNumbers = show;
+    emit showLineNumbersChanged();
+}
+
+bool ConfigManager::showLineNumbers() const
+{
+    return m_showLineNumbers;
 }

@@ -29,6 +29,7 @@ class ConfigManager : public QObject
     Q_PROPERTY(int editorTabSize READ editorTabSize WRITE setEditorTabSize NOTIFY editorTabSizeChanged)
     Q_PROPERTY(QString editorIndentMode READ editorIndentMode WRITE setEditorIndentMode NOTIFY editorIndentModeChanged)
     Q_PROPERTY(qreal opacity READ opacity WRITE setOpacity NOTIFY opacityChanged)
+    Q_PROPERTY(bool showLineNumbers READ showLineNumbers WRITE setShowLineNumbers NOTIFY showLineNumbersChanged)
 
   public:
     explicit ConfigManager(QObject *parent = nullptr);
@@ -45,6 +46,7 @@ class ConfigManager : public QObject
     int editorTabSize() const;
     QString editorIndentMode() const;
     qreal opacity() const;
+    bool showLineNumbers() const;
   public slots:
     void setEditorFontFamily(const QString &fontname);
     void setEditorFontSize(const int &fontsize);
@@ -52,6 +54,7 @@ class ConfigManager : public QObject
     void setEditorTabSize(const int &tabsize);
     void setEditorIndentMode(const QString &indentmode);
     void setOpacity(const qreal &opacity);
+    void setShowLineNumbers(const bool &show);
 
   signals:
     void editorFontFamilyChanged();
@@ -60,6 +63,7 @@ class ConfigManager : public QObject
     void editorIndentModeChanged();
     void editorTabSizeChanged();
     void opacityChanged();
+    void showLineNumbersChanged();
 
   private:
     QSettings *settings;
@@ -70,6 +74,7 @@ class ConfigManager : public QObject
     int m_editorTabSize;
     QString m_editorIndentMode;
     qreal m_opacity;
+    bool m_showLineNumbers;
 };
 
 #endif // CONFIGMANAGER_H
