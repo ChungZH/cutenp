@@ -119,7 +119,7 @@ jobs:
           cd build
           wget https://github.com/probonopd/linuxdeployqt/releases/download/6/linuxdeployqt-6-x86_64.AppImage
           chmod +x ./linuxdeployqt-6-x86_64.AppImage
-          ./linuxdeployqt-6-x86_64.AppImage --appimage-extract
+          ./linuxdeployqt-6-x86_64.AppImage --appimage-extract -qmldir="$Qt5_DIR/qml"
           cd AppDir
           wget -c https://github.com/darealshinji/AppImageKit-checkrt/releases/download/continuous/AppRun-patched-x86_64 -O AppRun
           chmod a+x AppRun
@@ -248,7 +248,7 @@ jobs:
           cmake --build . 
           sudo cmake --install .
           tree -a
-          macdeployqt notepanda.app -dmg
+          macdeployqt notepanda.app -dmg -qmldir="$Qt5_DIR/qml"
       - name: macOS - ${{ matrix.qt_version }} - Uploading Artifact
         if: matrix.platform == 'macos-latest'
         uses: actions/upload-artifact@master
