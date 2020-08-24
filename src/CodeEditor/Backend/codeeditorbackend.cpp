@@ -12,7 +12,6 @@ CodeEditorBackend::CodeEditorBackend(QObject *parent) : QObject(parent)
 {
     m_fileName = "Untitled";
     m_bgColor = QColor("#FFFFFF");
-    qDebug() << m_bgColor;
     for (const auto &theme : m_repository.themes()) Npanda::common::shThemeList.push_back(theme.name());
 }
 
@@ -36,6 +35,11 @@ QColor CodeEditorBackend::bgColor() const
     return m_bgColor;
 }
 
+QColor CodeEditorBackend::selectColor() const
+{
+    return m_selectColor;
+}
+
 void CodeEditorBackend::setFileUrl(const QUrl &fileUrl)
 {
     if (m_fileUrl == fileUrl)
@@ -54,6 +58,8 @@ void CodeEditorBackend::setFileName(const QString &fileName)
     if (m_fileName.isEmpty() || m_fileName == "Untitled")
     {
         // Init syntax highlighting
+        // Better initialization method:
+        // https://stackoverflow.com/questions/39128725/how-to-implement-rich-text-logic-on-qml-textedit-with-qsyntaxhighlighter-class-i
 
         // MAGIC! DON'T TOUCH
         m_doc = Npanda::common::doc;
@@ -88,6 +94,14 @@ void CodeEditorBackend::setBgColor(const QColor &bgColor)
         return;
     m_bgColor = bgColor;
     emit bgColorChanged(bgColor);
+}
+
+void CodeEditorBackend::setSelectColor(const QColor &color)
+{
+    if (m_selectColor == color)
+        return;
+    m_selectColor = color;
+    emit selectColorChanged(color);
 }
 
 bool CodeEditorBackend::load()
@@ -163,4 +177,5 @@ void CodeEditorBackend::setTheme(const KSyntaxHighlighting::Theme &theme)
     m_highlighter->rehighlight();
     Npanda::common::shTheme = m_highlighter->theme();
     setBgColor(m_highlighter->theme().editorColor(KSyntaxHighlighting::Theme::BackgroundColor));
+    setSelectColor(m_highlighter->theme().editorColor(KSyntaxHighlighting::Theme::TextSelection));
 }

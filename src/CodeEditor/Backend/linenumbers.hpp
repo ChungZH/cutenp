@@ -49,6 +49,9 @@ class LineNumbers : public QQuickPaintedItem
 
     virtual void paint(QPainter *painter) override
     {
+        if (!cfManager->showLineNumbers())
+            return;
+
         QFont font(cfManager->editorFontFamily(), cfManager->editorFontSize());
         painter->setFont(font);
 

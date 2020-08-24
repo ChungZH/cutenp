@@ -91,7 +91,7 @@ void ConfigManager::readGeneralSettings()
     m_editorTabSize = settings->value("Editor/TabSize", 4).toInt();
     m_editorIndentMode = settings->value("Editor/IndentMode", "Spaces").toString();
     m_editorColorTheme = settings->value("Editor/ColorTheme", "Default").toString();
-    m_opacity = settings->value("Opacity", 1).toReal();
+    m_opacity = settings->value("Opacity", 1.0).toReal();
     m_showLineNumbers = settings->value("Editor/ShowLineNumbers", true).toBool();
 
     editorFontFamilyChanged();
