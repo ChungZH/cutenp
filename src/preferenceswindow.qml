@@ -15,7 +15,6 @@ Dialog {
     TabBar {
         id: bar
         width: parent.width
-        currentIndex: 1
 
         Material.accent: Material.LightBlue
 
@@ -190,6 +189,26 @@ Dialog {
                                 width: 130
 
                                 onValueChanged: cfManager.editorTabSize = value
+                            }
+                        }
+                    }
+
+                    GroupBox {
+                        id: displayGroup
+                        title: qsTr("Display")
+                        font.pointSize: 13
+
+                        Grid {
+                            columns: 2
+                            spacing: 5
+
+                            CheckBox {
+                                id: showLineNumbers
+                                text: qsTr("Show Linenumbers: ")
+                                checked: cfManager.showLineNumbers
+                                font.pointSize: 10
+                                onCheckedChanged: cfManager.setShowLineNumbers(
+                                                      checked)
                             }
                         }
                     }
